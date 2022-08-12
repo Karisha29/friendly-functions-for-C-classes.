@@ -1,32 +1,60 @@
-# Prerequisites
-*.d
+#include <conio.h>
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include <math.h>
+using namespace std;
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+class Circle {
+private:
+	double R = 0, V = 0; //R радіус,V об'єм
 
-# Precompiled Headers
-*.gch
-*.pch
+public:
+	Circle() //Конструктор, який приймає параметри
+	{
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+	}
+	Circle(double radius) //Деструктор 
+	{
+		this->R = radius;
+		this->V = Getvolume();
+	}
+	void SetR(double radius)
+	{
+		this->R = radius;
+	}
+	double GetR()
+	{
+		return this->R;
+	}
+	double Getvolume() //Формула об'єм кулі
+	{
+		double volume = 4 / 3 * this->R * this->R * this->R * 3.14159;
+		return volume;
+	}
+	friend Circle frd(Circle& a, Circle& b) //Дружня функція
+	{
+		double V = a.Getvolume() + b.Getvolume();
+		double R = pow((V / ((4 / 3) * 3.14159)), 1.0 / 3);
+		return Circle(R);
+	}
+};
 
-# Fortran module files
-*.mod
-*.smod
+int main()
+{
+	
+	double b1, b2;
+	cout << "Enter radius 1=\n"; //Радіус 1
+	cin >> b1;
+	Circle a(b1);
+	cout << "V1 = " << a.Getvolume() << "\n\n"; //Об'єм 1 кулі
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+	cout << "Enter radius 2=\n"; //Радіус 2
+	cin >> b2;
+	Circle b(b2);
+	cout << "V2 = " << b.Getvolume() << "\n\n"; //Об'єм 2 кулі
 
-# Executables
-*.exe
-*.out
-*.app
+	Circle myCircle = frd(a, b); //Виклик дружньої функції
+	cout << "volume = " << myCircle.Getvolume() << "\n\n"; //Виведення результату 2 куль
+	
+};
